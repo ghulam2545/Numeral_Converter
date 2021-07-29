@@ -41,7 +41,7 @@ std::string deci_base_double(std::string& input_data, int base, int fracDigits);
 
 
 std::string binary_base_long(std::string& input_data, int base);
-std::string binary_base_double(std::string& input_data, int base, int fracDigits);
+std::string binary_base_double(std::string& input_data, int base);
 
 
 std::string octal_base_long(std::string& input_data, int base);
@@ -54,20 +54,21 @@ std::string hexa_base_double(std::string& input_data, int base, int fracDigits);
 
 
 int main() {
-	std::string num = "-1111001010101010";
+	std::string num = "12.543212";
 	if(_isWhole(num)) {
 		if(valid_hexa_long(num)) {
-			int base = 16;
-			std::cout<<binary_base_long(num, base);
+			int base = 2;
+			std::cout<<deci_base_long(num, base);
 		}
 		else std::cout<<"jhjfgjd";
 	}  
 	else {
 		char left = '0', right = '9';
 		if(valid_double(num, left, right)) {
-			int base = 16;
+			int base = 2;
 			int fg = 8;
 			std::cout<<deci_base_double(num, base, fg);
+			std::cout<<"end";
 		}
 		else std::cout<<"jhjfgjd";
 	};
@@ -167,7 +168,8 @@ std::string deci_base_long(std::string& input_data, int _base) {
 	else  return ("-"+ans);
 }
 std::string deci_base_double(std::string& input_data, int base, int fracDigits) {
-	double _input_data = stod(input_data);
+	long double _input_data = stold(input_data);
+	std::cout<<"i am  "<<_input_data<<"\n\n\n";
 	bool positive = true;
 	if(_input_data < 0) positive = false;
 	long long whole = abs(_input_data);
@@ -223,8 +225,25 @@ std::string binary_base_long(std::string& input_data, int base) {
 	else if(base == 8) return deci_base_long(ans, 8);
 	else return deci_base_long(ans, 16);
 }
-std::string binary_base_double(std::string& input_data, int base, int fracDigits) {
+std::string binary_base_double(std::string& input_data, int base) {
+	std::cout<<input_data<<"\n\n\n";
+	double _input_data = stod(input_data);
+	std::cout<<_input_data<<"\n\n\n";
+	bool positive = true;
+	if(_input_data < 0) positive = false;
+	long long whole = abs(_input_data);
+	std::string whole_ = std::to_string(whole);
+	double fractional = 0.0;
+	if(positive) fractional = _input_data - whole;
+	else fractional = (-1 * _input_data) - whole;
+	std::string fractional_ = std::to_string(fractional);
+	std::cout<<"fjdjf         " <<fractional_<<"\n";
 	
+	return "abs";
 }
 
 // .............
+
+
+
+// I discarted bcz it's hard to deal/convert floating point number for now. SEE YOU LATER
