@@ -18,10 +18,11 @@
 #include <cstring>
 #include <deque>
 
-char _point = '.';
+
 
 ////////////////////////////////////////////////////////
 // Validation check methods
+
 bool _isWhole(std::string& input_data);
 
 bool valid_long(std::string& input_data,char leftOp, char rightOp);
@@ -37,49 +38,41 @@ bool valid_hexa_double(std::string& input_data);
 
 std::string deci_base_long(std::string& input_data, int base);
 std::string deci_base_double(std::string& input_data, int base, int fracDigits);
-std::string deci_base_hexa_long(std::string& input_data);
-std::string deci_base_hexa_double(std::string& input_data);
 
 
 std::string binary_base_long(std::string& input_data, int base);
 std::string binary_base_double(std::string& input_data, int base, int fracDigits);
-std::string binary_base_hexa_long(std::string& input_data);
-std::string binary_base_hexa_double(std::string& input_data);
 
 
 std::string octal_base_long(std::string& input_data, int base);
 std::string octal_base_double(std::string& input_data, int base, int fracDigits);
-std::string octal_base_hexa_long(std::string& input_data);
-std::string octal_base_hexa_double(std::string& input_data);
 
 
 std::string hexa_base_long(std::string& input_data, int base);
 std::string hexa_base_double(std::string& input_data, int base, int fracDigits);
-std::string hexa_base_hexa_long(std::string& input_data);
-std::string hexa_base_hexa_double(std::string& input_data);
 ////////////////////////////////////////////////////////
 
 
 int main() {
-//	std::string num = "-23.2";
-//	char left = '0', right = '9';
+//	std::string num = "0.16";
 //	if(_isWhole(num)) {
-//		if(valid_long(num, left, right)) {
-//			int base = 2;
+//		if(valid_hexa_long(num)) {
+//			int base = 16;
 //			std::cout<<deci_base_long(num, base);
 //		}
 //		else std::cout<<"jhjfgjd";
 //	}  
 //	else {
+//		char left = '0', right = '9';
 //		if(valid_double(num, left, right)) {
-//			int base = 10;
+//			int base = 16;
 //			int fg = 8;
 //			std::cout<<deci_base_double(num, base, fg);
 //		}
 //		else std::cout<<"jhjfgjd";
 //	};
-	
-	return 0;
+//	
+//	return 0;
 }
 
 bool _isWhole(std::string& input_data) {
@@ -140,45 +133,93 @@ std::string deci_base_long(std::string& input_data, int _base) {
 	std::deque<int> _ans;
 	std::string ans = "";
 	if(abs(_input_data) == 0) return "0";
-	while((abs(_input_data))) {
-		_ans.push_front(abs(_input_data) % _base);
-		_input_data /= _base;
+	if(_base == 16) {
+		while((abs(_input_data))) {
+			int remainder = abs(_input_data) % _base;
+			if(remainder == 10) _ans.push_front('A');
+			else if(remainder == 11) _ans.push_front('B');
+			else if(remainder == 12) _ans.push_front('C');
+			else if(remainder == 13) _ans.push_front('D');
+			else if(remainder == 14) _ans.push_front('E');
+			else if(remainder == 15) _ans.push_front('F');
+			else {
+				_ans.push_front(remainder);
+			}
+			_input_data /= _base;
+		}
+	}
+	else {
+		while((abs(_input_data))) {
+			_ans.push_front(abs(_input_data) % _base);
+			_input_data /= _base;
+		}
 	}
 	for(int i=0; i<_ans.size(); i++) {
-		ans += std::to_string(_ans[i]);
+		if(_ans[i] >= 10) {
+			char value = _ans[i];
+			ans += value;	
+		}
+		else {
+			ans += std::to_string(_ans[i]);
+		}	
 	}
 	if (positive) return ans;
 	else  return ("-"+ans);
 }
 std::string deci_base_double(std::string& input_data, int base, int fracDigits) {
-	long double x = stold(input_data);
-	std::string result;
-	bool neg = ( x < 0 );   if ( neg ) x = -x;
-	x += pow(base, -fracDigits) / 2.0;
-	long long whole = x;
-    long double fraction = x - whole;
-    if ( whole == 0 ) result = "0";
-    while ( whole ) {
-       result = (char)( whole % base + '0' ) + result;
-       whole /= base;
-    } 
-    result += _point;
-    long double value = 1.0;
-   	for (long long int i = 1; i <= fracDigits; i++ ) {
-       value /= base;
-       long long num = fraction / value;
-       result += (char)( num + '0' );
-       fraction -= num * value;
-    }
-    if ( neg ) result = '-' + result;
-   	return result;
+	double _input_data = stod(input_data);
+	bool positive = true;
+	if(_input_data < 0) positive = false;
+	long long whole = abs(_input_data);
+	std::string whole_ = std::to_string(whole);
+	double fractional = 0.0;
+	if(positive) fractional = _input_data - whole;
+	else fractional = (-1 * _input_data) - whole;
+	
+	std::string ans1 = deci_base_long(whole_, base);
+	std::string ans2 = "";
+	while(fracDigits--) {
+		if(base == 16) {
+			fractional = fractional * base;
+			if(fractional < 0) {
+				ans2 += "0";
+			}
+			else {
+				int temp = fractional;
+				if(temp == 10) ans2 += 'A';
+				else if(temp == 11) ans2 += 'B';
+				else if(temp == 12) ans2 += 'C';
+				else if(temp == 13) ans2 += 'D';
+				else if(temp == 14) ans2 += 'E';
+				else if(temp == 15) ans2 += 'F';
+				else {
+					ans2 += std::to_string(temp);
+					fractional = fractional - temp;
+				}	
+			}
+		}
+		else {
+			fractional = fractional * base;
+			if(fractional < 0) {
+				ans2 += "0";
+			}
+			else {
+				int temp = fractional;
+				ans2 += std::to_string(temp);
+				fractional = fractional - temp;
+			}
+		}
+	}
+	if (positive) return ans1 + "." + ans2;
+	else  return ("-"+ ans1 + "." + ans2);	
 }
 
 // Complete.........
-std::string deci_base_hexa_long(std::string& input_data) {
+std::string deci_hexa_long(std::string& input_data) {
+	
 	
 }
-std::string deci_base_hexa_double(std::string& input_data) {
+std::string deci_hexa_double(std::string& input_data) {
 	
 }
 
