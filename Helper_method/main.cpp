@@ -54,25 +54,25 @@ std::string hexa_base_double(std::string& input_data, int base, int fracDigits);
 
 
 int main() {
-//	std::string num = "0.16";
-//	if(_isWhole(num)) {
-//		if(valid_hexa_long(num)) {
-//			int base = 16;
-//			std::cout<<deci_base_long(num, base);
-//		}
-//		else std::cout<<"jhjfgjd";
-//	}  
-//	else {
-//		char left = '0', right = '9';
-//		if(valid_double(num, left, right)) {
-//			int base = 16;
-//			int fg = 8;
-//			std::cout<<deci_base_double(num, base, fg);
-//		}
-//		else std::cout<<"jhjfgjd";
-//	};
-//	
-//	return 0;
+	std::string num = "-1111001010101010";
+	if(_isWhole(num)) {
+		if(valid_hexa_long(num)) {
+			int base = 16;
+			std::cout<<binary_base_long(num, base);
+		}
+		else std::cout<<"jhjfgjd";
+	}  
+	else {
+		char left = '0', right = '9';
+		if(valid_double(num, left, right)) {
+			int base = 16;
+			int fg = 8;
+			std::cout<<deci_base_double(num, base, fg);
+		}
+		else std::cout<<"jhjfgjd";
+	};
+	
+	return 0;
 }
 
 bool _isWhole(std::string& input_data) {
@@ -215,13 +215,16 @@ std::string deci_base_double(std::string& input_data, int base, int fracDigits) 
 }
 
 // Complete.........
-std::string deci_hexa_long(std::string& input_data) {
-	
+std::string binary_base_long(std::string& input_data, int base) {
+	long _ans = stol(input_data, 0, 2);
+	std::string ans = std::to_string(_ans);
+	if(base == 10) return ans; 
+	else if(base == 2) return input_data;
+	else if(base == 8) return deci_base_long(ans, 8);
+	else return deci_base_long(ans, 16);
+}
+std::string binary_base_double(std::string& input_data, int base, int fracDigits) {
 	
 }
-std::string deci_hexa_double(std::string& input_data) {
-	
-}
-
 
 // .............
