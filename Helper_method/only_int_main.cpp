@@ -41,6 +41,8 @@ bool is_hexa_valid(std::string& input_data) {
 	}
 	return ans;
 }
+
+// Improve implementation of this method.
 std::string deci_to_base(std::string& input_data, int _base) {
 	long long _input_data = stoll(input_data);
 	bool positive = true;
@@ -103,7 +105,7 @@ std::string octal_to_base(std::string& input_data, int _base) {
 	std::string ans = std::to_string(_input);
 	if(_base == 10) return ans;
 	else if(_base == 2) return  deci_to_base(ans, 2);
-	else if(_base == 8) return  deci_to_base(ans, 8);
+	else if(_base == 8) return  input_data;
 	else if(_base == 16) return  deci_to_base(ans, 16);
 }
 std::string hexa_to_base(std::string& input_data, int _base) {
@@ -113,6 +115,5 @@ std::string hexa_to_base(std::string& input_data, int _base) {
 	if(_base == 10) return ans;
 	else if(_base == 2) return  deci_to_base(ans, 2);
 	else if(_base == 8) return  deci_to_base(ans, 8);
-	else if(_base == 16) return  deci_to_base(ans, 16);
-	
+	else if(_base == 16) return  input_data;
 }
