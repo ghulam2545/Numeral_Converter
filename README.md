@@ -1,6 +1,8 @@
 # Numeral_Converter
 <img src="https://github.com/ghulam2545/Numeral_Converter/blob/master/output.PNG"/>
 <br><br>
+< <b>Imp Note : </b> Due to uninstallation of Qt I lost UI interface design. >
+<br><br>
 It's a tiny school project, solution to an standard real world problem <b>Number Conversion System</b>.
 <br>It can convert decimal-binary-octal-hexadecimal number each other(vice-versa).
 <br><b>Limitation</b> - This converter ONLY deals with integer values not a fractional.
