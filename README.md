@@ -1,5 +1,5 @@
 # Numeral_Converter
-<img src="https://github.com/ghulam2545/Numeral_Converter/blob/master/output.PNG"/>
+![output](https://user-images.githubusercontent.com/75310406/192144493-560119aa-d814-4a98-8d3e-79cb17762675.PNG)
 <br><br>
 < <b>Imp Note : </b> Due to uninstallation of Qt I lost UI interface design. >
 <br><br>
